@@ -2,7 +2,9 @@
 
 const express = require('express')
 const app = express()
-const bcrypt = require("bcrypt") // importing bcyprt package
+const bcrypt = require("bcryptjs") // importing bcyprt package
+const passport = require("passport")
+const initializePassport = require("./passport-config")
 
 const users = []
 
@@ -17,12 +19,16 @@ app.post("/register", async (req, res) => {
             email: req.body.email,
             password: hashedPassword,
         })
-        res.redicrect("/login")
+        console.log(users); 
+        res.redirect("/login")
     } catch (e) {
         console.log(e);
         res.redirect("/register")    
     }
 })
+
+
+
 
 
 // Routes
@@ -41,6 +47,6 @@ app.get('/register',(req, res) => {
 // End Routes
 
 
-console.log(users);
+
 app.listen(3000)
 
