@@ -35,14 +35,14 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // configuring the register post functionality 
-app.post("/login", passport.authenticate("local", {
+app.post("/login", checkNotAuthenticated, passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login",
     failureFlash: true
 }))
 
 // configuring the register post functionality
-app.post("/register", async (req, res) => {
+app.post("/register",checkNotAuthenticated, async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
         users.push({
@@ -68,11 +68,11 @@ app.get('/',(req, res)=> {
     res.render("index.ejs", {name: req.user.name})
 })
 
-app.get('/login', (req, res) => {
+app.get('/login', checkNotAuthenticated, (req, res) => {
     res.render("login.ejs")
 })
 
-app.get('/register',(req, res) => {
+app.get('/register', checkNotAuthenticated, (req, res) => {
      res.render("register.ejs")
 })
 
@@ -84,6 +84,14 @@ function checkAuthenticated(req, res, next){
     }
     res.redirect("/login")
 }
+
+function checkNotAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        res.redirect("/")
+    }
+    next()
+}
+
 
 app.listen(3000)
 
