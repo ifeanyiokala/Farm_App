@@ -106,3 +106,4 @@ function checkNotAuthenticated(req, res, next){
 app.listen(3000)
 
 // couldn't work cause of light 
+// getting tuff new gig
