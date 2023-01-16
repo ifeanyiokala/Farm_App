@@ -107,3 +107,4 @@ app.listen(3000)
 
 // couldn't work cause of light 
 // getting tuff new gig
+// less work, must just make time and code
